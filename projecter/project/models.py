@@ -14,3 +14,20 @@ class Post(models.Model):
 
     def delete_image(self):
         self.delete()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    bio = models.TextField(max_length = 300)
+    objects = models.Manager()
+
+    def __str__(self):
+        return f'{self.user} Profile'
+
+    def save_profile(self):
+        self.save()
+
+    @classmethod
+    def search_by_user(cls,search_term):
+        users = User.objects.filter(username__icontains=search_term)
+        return users
