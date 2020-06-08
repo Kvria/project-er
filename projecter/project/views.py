@@ -42,3 +42,16 @@ def search_users(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+def post_new(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = Uploads(request.POST, request.FILES)
+        if form.is_valid():
+            user_img = form.save(commit=False)
+            user_img.profile = current_user
+            user_img.save()
+        return redirect('home')
+    else:
+        form = Uploads()
+    return render(request, "new_post.html", {"form": form})

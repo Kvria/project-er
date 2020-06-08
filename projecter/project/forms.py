@@ -13,3 +13,8 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_pic','bio']
+
+class Uploads(forms.ModelForm):
+    class Meta:
+        model= Post
+        exclude = ['profile','post_date']
