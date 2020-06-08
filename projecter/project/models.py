@@ -6,14 +6,16 @@ from djangoratings.fields import RatingField
 # Create your models here.
 
 class Post(models.Model):
-    image = models.ImageField(upload_to='images/')
+    project_image = models.ImageField(upload_to='images/')
+    project_name = models.CharField(max_length = 500)
     description = models.CharField(max_length = 500)
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
+    project_url = models.CharField(max_length = 500)
     objects = models.Manager()
     
-    def __str__(self):
-        return self.image
+    # def __str__(self):
+    #     return self.image
 
     def save_image(self):
         self.save()
@@ -42,7 +44,7 @@ class Profile(models.Model):
         return users
 
 class Rate(models.Model):
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='rate')
+    project_image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='rate')
     design = models.RatingField(range=10)
     usability =models.RatingField(range=10)
     content = models.RatingField(range=10)
@@ -55,7 +57,7 @@ class Rate(models.Model):
         self.delete()
 
     @classmethod
-    def get_comments_on_image(cls, id):
-        the_comments = Comment.objects.filter(image__pk=id)
-        return the_comments
+    def get_ratings_on_image(cls, id):
+        the_ratings = Rate.objects.filter(image__pk=id)
+        return the_ratings
    
