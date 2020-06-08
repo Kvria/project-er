@@ -15,18 +15,18 @@ def profile(request):
     profile = Profile.objects.all()
 
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,instance=request.user)
 
 
-        if u_form.is_valid():
-            u_form.save()
+        if p_form.is_valid():
+            p.save()
             
             return render(request,'registration/profile.html')
 
     else:
-        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user)
 
-    context = {'u_form': u_form}
+    context = {'p_form': p_form}
 
     return render(request, 'registration/profile.html',locals())
 
