@@ -30,3 +30,15 @@ def profile(request):
 
     return render(request, 'registration/profile.html',locals())
 
+def search_users(request):
+
+    if 'profile' in request.GET and request.GET["profile"]:
+        search_term = request.GET.get("profile")
+        searched_users = Profile.search_by_user(search_term)
+        message = f"{search_term}"
+
+        return render(request, '/search.html',{"message":message,"users": searched_users})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
