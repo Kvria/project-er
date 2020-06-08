@@ -11,7 +11,7 @@ def home(request):
 @login_required(login_url='/accounts/login/')
 def profile(request):
     current_user = request.user
-    p = Image.objects.all()
+    posts = Post.objects.all()
     profile = Profile.objects.all()
 
     if request.method == 'POST':
