@@ -27,6 +27,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics')
     bio = models.TextField(max_length = 300)
+    contacts = models.CharField(max_length = 250)
     objects = models.Manager()
 
     def __str__(self):
