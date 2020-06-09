@@ -80,7 +80,7 @@ def search_by_project_name(request):
 class Post(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 
-    def get_projects(self, pk):
+    def get_project(self, pk):
         try:
             return Post.objects.get(pk=pk)
         except Post.DoesNotExist:
@@ -98,3 +98,17 @@ class Post(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        project = self.get_project(pk)
+        serializers = ProjectSerializer(project, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        project = self.get_project(pk)
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
