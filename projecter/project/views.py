@@ -79,11 +79,18 @@ def search_by_project_name(request):
 
 class Post(APIView):
     permission_classes = (IsAdminOrReadOnly,)
+
     def get_projects(self, pk):
         try:
             return Post.objects.get(pk=pk)
         except Post.DoesNotExist:
             return Http404
+
+    def get(self, request, format=None):
+        all_projects = Post.objects.all()
+        serializers = ProjectSerializer(all_projects, many=True)
+
+        return Response(serializers.data)
 
     def post(self, request, format=None):
         serializers = ProjectSerializer(data=request.data)
