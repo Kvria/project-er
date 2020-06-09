@@ -5,16 +5,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProjectSerializer
 from rest_framework import status
-from django.contrib.auth.decorators import login_required.
+from django.contrib.auth.decorators import login_required
 from .permissions import IsAdminOrReadOnly
 from rest_framework import status
+from .forms import ProfileUpdateForm, Uploads
 
 
 # Create your views here.
 @login_required(login_url = "accounts/login")
 def home(request):
     posts = Post.objects.all()
-    return render(request,'index.html',{"images":images})
+    return render(request,'index.html',{"posts":posts})
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -27,7 +28,7 @@ def profile(request):
 
 
         if p_form.is_valid():
-            p.save()
+            p_form.save()
             
             return render(request,'registration/profile.html')
 
@@ -71,13 +72,13 @@ def search_by_project_name(request):
         searched_projects = Post.search_by_user(search_term)
         message = f"{search_term}"
 
-        return render(request, '/search.html',{"message":message,"users": searched_users})
+        return render(request, '/search.html',{"message":message,"users": searched_projects})
 
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
-class Post(APIView):
+class Posts(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get_project(self, pk):

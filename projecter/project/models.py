@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from djangoratings.fields import RatingField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -28,7 +27,7 @@ class Post(models.Model):
     @classmethod
     def search_by_project_name(cls,search_term):
         projects = Post.objects.filter(project_name__icontains=search_term)
-        return users
+        return projects
 
     @classmethod
     def display_all_projects(cls):
@@ -60,20 +59,20 @@ class Profile(models.Model):
         users = User.objects.filter(username__icontains=search_term)
         return users
 
-    @receiver(post_save, sender = User)
-    def create_profile(sender, instance,created, **kwargs):
-        if created:
-            Profile.objects.create(user = instance)
+@receiver(post_save, sender = User)
+def create_profile(sender, instance,created, **kwargs):
+    if created:
+        Profile.objects.create(user = instance)
 
-    @receiver(post_save,sender = User)
-    def save_profile( sender, instance, **kwargs):
-        instance.profile.save()
+@receiver(post_save,sender = User)
+def save_profile( sender, instance, **kwargs):
+    instance.profile.save()
 
 class Rate(models.Model):
-    project_image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='rate')
-    design = models.RatingField(range=10)
-    usability =models.RatingField(range=10)
-    content = models.RatingField(range=10)
+    project_image = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='rate')
+    design = models.IntegerField()
+    usability =models.IntegerField()
+    content = models.IntegerField()
     objects = models.Manager()
 
     def save_rating(self):
