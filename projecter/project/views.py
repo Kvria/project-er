@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from .serializer import ProjectSerializer
 from rest_framework import status
 from django.contrib.auth.decorators import login_required.
+from .permissions import IsAdminOrReadOnly
+
 
 # Create your views here.
 @login_required(login_url = "accounts/login")
@@ -78,6 +80,7 @@ class Post(APIView):
     def get(self, request, format=None):
         all_projects = Post.objects.all()
         serializers = ProjectSerializer(all_projects, many=True)
+        permission_classes = (IsAdminOrReadOnly,)
         return Response(serializers.data)
 
     def post(self, request, format=None):
