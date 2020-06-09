@@ -8,7 +8,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Post(models.Model):
-    project_image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/')
     project_name = models.CharField(max_length = 500)
     description = models.CharField(max_length = 500)
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -19,10 +19,10 @@ class Post(models.Model):
     def __str__(self):
        return self.project_name
 
-    def save_image(self):
+    def save_post(self):
         self.save()
 
-    def delete_image(self):
+    def delete_post(self):
         self.delete()
 
     @classmethod

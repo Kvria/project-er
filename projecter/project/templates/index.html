@@ -11,12 +11,31 @@
 
     </div>
     <div class="col col-md-7">
-      {% for image in images%}
+      {% for post in posts%}
       <div class="w3-card" style="width:100%;">
         <header class="w3-container w3-light-grey">
             <a href="/profile" style="text-decoration:none;" ><h5 class="account-heading">{{ user.username }}</h5></a>
         </header>
         <hr>
-        <div class="w3-container"><img src="{{post.project_image.url}}" style="width:100%"></div>
+        <div class="w3-container"><img src="{{post.image.url}}" style="width:100%"></div>
         <hr>
-        <footer class="w3-container"><ul class="list-inline">
+        <footer class="w3-container">
+            {% rating_by_user user on instance.field as vote %}
+            <h5 style=" font-size: 20px !important;"><strong>{{post.profile.username}}</strong>
+                {{post.project_name}}</h5>
+
+            </footer>
+        </div>
+        <br><br><br><br>
+        {%endfor%}
+  
+      </div>
+      <div class="col col-md-4 w3-hide-small">
+  
+      </div>
+  
+    </div>
+  
+  </div>
+  
+  {% endblock %}
