@@ -1,0 +1,22 @@
+{% extends 'registration/base.html' %}
+{% block content %}
+<div class="content-section" style="margin: 10px; background-color: #546A7B;">
+<div class="media">
+  <img class="rounded-circle account-img" style="border-radius: 50%;" src="https://thumbnail.imgbin.com/0/21/18/imgbin-computer-icons-avatar-icon-design-blog-avatar-bxERshSmxe6FZPxx0U2MCdeRH_t.jpg" alt="Image" width="75" height="75">
+  <div class="media-body">
+    <h2 class="account-heading">{{ user.username }}</h2>
+    <p class="text-secondary">{{ user.email }}</p>
+  </div>
+</div>
+<div class ="profile" style="background-color: #62929e;">
+<form class="col-md-4" style ="margin-left:50px;margin-right: 50px;" method="post" enctype="multipart/form-data">
+    <legend class="border-bottom mb-4"><b>Profile Info</b></legend>
+    {% csrf_token %}
+    {% bootstrap_form form%}
+      
+    <button class="btn btn-outline-info" type="submit">Update Info</button>
+
+</form>
+</div>
+</div>
+{% endblock content %}
