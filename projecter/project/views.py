@@ -7,6 +7,7 @@ from .serializer import ProjectSerializer
 from rest_framework import status
 from django.contrib.auth.decorators import login_required.
 from .permissions import IsAdminOrReadOnly
+from rest_framework import status
 
 
 # Create your views here.
@@ -77,11 +78,12 @@ def search_by_project_name(request):
         return render(request, 'search.html',{"message":message})
 
 class Post(APIView):
-    def get(self, request, format=None):
-        all_projects = Post.objects.all()
-        serializers = ProjectSerializer(all_projects, many=True)
-        permission_classes = (IsAdminOrReadOnly,)
-        return Response(serializers.data)
+    permission_classes = (IsAdminOrReadOnly,)
+    def get_projects(self, pk):
+        try:
+            return Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Http404
 
     def post(self, request, format=None):
         serializers = ProjectSerializer(data=request.data)
