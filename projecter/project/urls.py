@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from djangoratings.views import AddRatingFromModel
 from . import views
 
 urlpatterns=[
@@ -6,7 +7,12 @@ urlpatterns=[
     url(r'^profile/', views.profile, name='profile'),
     url(r'^post/new', views.post_new, name= 'new_post'),
     url(r'^search/', views.search_users, name='search_users'),
+    url(r'^search_project/', views.search_by_project_name, name='search_project'),
     url(r'^api/project/$', views.ProjectList.as_view()),
     url(r'api/project/project-id/(?P<pk>[0-9]+)/$',
-        views.ProjectDescription.as_view())
+        views.ProjectDescription.as_view()),
+    url(r'rate-my-post/(?P<object_id>\d+)/(?P<score>\d+)/', AddRatingFromModel(), {
+        'app_label': 'projecter',
+        'model': 'post',
+        'field_name': 'rating'}),
 ]

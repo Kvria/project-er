@@ -16,7 +16,7 @@ class Post(models.Model):
     project_url = models.URLField()
     objects = models.Manager()
     
-     def __str__(self):
+    def __str__(self):
        return self.project_name
 
     def save_image(self):
