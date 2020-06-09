@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'djangoratings',
     'bootstrap3',
     'projecter',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

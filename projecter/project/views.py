@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post,Profile,User
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required.
 
 # Create your views here.
