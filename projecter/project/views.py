@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Post,Profile,User
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import ProjectSerializer
 from django.contrib.auth.decorators import login_required.
 
 # Create your views here.
@@ -56,3 +59,22 @@ def post_new(request):
     else:
         form = Uploads()
     return render(request, "new_post.html", {"form": form})
+
+def search_by_project_name(request):
+
+    if 'post' in request.GET and request.GET["post"]:
+        search_term = request.GET.get("post")
+        searched_projects = Post.search_by_user(search_term)
+        message = f"{search_term}"
+
+        return render(request, '/search.html',{"message":message,"users": searched_users})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
+
+class Post(APIView):
+    def get(self, request, format=None):
+        all_projects = Post.objects.all()
+        serializers = MerchSerializer(all_merch, many=True)
+        return Response(serializers.data)
