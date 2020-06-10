@@ -1,23 +1,28 @@
 {% load bootstrap3 %} 
 {% load staticfiles %}
-
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {{form.media}}}
 
+  {% block styles %}
+      {% bootstrap_css %}
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+      <style>@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');</style>
+      
+  {% endblock %}
+
 </head>
 
 <body>
-<div class="container" style ="background-color: #A57982;">
+<div class="container" >
   <div class="row">
     <!-- Empty div -->
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <div class="col-md-4 form-group">
+    <div class="col-md-2"></div>
+    <div class="col-md-2">
+      <div class="col-md-12 form-group">
         <h2><b>Post new image</b></h2>
         <form  action="#" method="post" enctype="multipart/form-data">
         {% bootstrap_form form%}
@@ -34,8 +39,9 @@
   {% bootstrap_javascript %} {% endblock %}
 
 </body>
-<style>
-
-</style>
-
 </html>
+<style>
+body{
+  background-color: #A57982;
+}
+</style>

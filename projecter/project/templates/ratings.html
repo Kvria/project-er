@@ -1,0 +1,16 @@
+<div class="container" >
+    <div class="row">
+      <!-- Empty div -->
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="col-md-4 form-group">
+          <h2><b>Rate image</b></h2>
+          <form  action="#" method="post" enctype="multipart/form-data">
+          {% bootstrap_form form%}
+          {%csrf_token%}
+          
+            <input type="submit" class="btn btn-success btn-lg" value="Post">
+          </form>
+      </div>
+    </div>
+  </div>

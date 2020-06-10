@@ -1,22 +1,48 @@
 {% extends 'registration/base.html' %}
-{% block content %}
-<div class="content-section" style="margin: 10px; background-color: #546A7B;">
-<div class="media">
-  <img class="rounded-circle account-img" style="border-radius: 50%;" src="https://thumbnail.imgbin.com/0/21/18/imgbin-computer-icons-avatar-icon-design-blog-avatar-bxERshSmxe6FZPxx0U2MCdeRH_t.jpg" alt="Image" width="75" height="75">
-  <div class="media-body">
-    <h2 class="account-heading">{{ user.username }}</h2>
-    <p class="text-secondary">{{ user.email }}</p>
-  </div>
-</div>
-<div class ="profile" style="background-color: #62929e;">
-<form class="col-md-4" style ="margin-left:50px;margin-right: 50px;" method="post" enctype="multipart/form-data">
-    <legend class="border-bottom mb-4"><b>Profile Info</b></legend>
-    {% csrf_token %}
-    {% bootstrap_form form%}
-      
-    <button class="btn btn-outline-info" type="submit">Update Info</button>
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</form>
-</div>
-</div>
-{% endblock content %}
+  {{form.media}}}
+
+  {% block styles %}
+      {% bootstrap_css %}
+      <style>@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');</style>
+      
+  {% endblock %}
+
+</head>
+<body>
+  
+  {% block content %}
+  <div class="content-section" style="margin: 10px; background-color: #546A7B;">
+  <div class="media">
+    <img class="rounded-circle account-img" style="border-radius: 50%;" src="https://thumbnail.imgbin.com/0/21/18/imgbin-computer-icons-avatar-icon-design-blog-avatar-bxERshSmxe6FZPxx0U2MCdeRH_t.jpg" alt="Image" width="75" height="75">
+    <div class="media-body">
+      <h2 class="account-heading">{{ user.username }}</h2>
+      <p class="text-secondary">{{ user.email }}</p>
+    </div>
+  </div>
+  <div class ="profile" >
+  <form class="col-md-4" style ="margin-left:50px;margin-right: 50px;" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4"><b>Profile Info</b></legend>
+          {{ p_form|crispy }}
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Update Info</button>
+        </div>
+    </fieldset>
+  </form>
+  </div>
+  </div>
+  {% endblock content %}
+</body>
+<style>
+body {
+  background-color: #62929e;
+}
+</style>

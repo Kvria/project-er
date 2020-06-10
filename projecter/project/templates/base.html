@@ -14,10 +14,12 @@
   <title>ProjectER</title>
   {%endif%}
 
-    {% block styles %}
-        {% bootstrap_css %}
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    {% endblock %}
+  {% block styles %}
+      {% bootstrap_css %}
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+      <style>@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');</style>
+      
+  {% endblock %}
 
 </head>
 

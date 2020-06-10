@@ -9,7 +9,7 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'home' %}">projectER</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><h4><b>projectER</b></h4></a>
           </div>
           <!-- Adding a search form  -->
           <div class="col-sm-4 col-md-4 navbar-right">
@@ -37,13 +37,13 @@
                   </a>
             <ul class="dropdown-menu" role="menu">
               <li>
-                <a href="{%url 'new_post'%}">Home</a>
+                <a href="{%url 'new_post'%}">New post</a>
               </li>
               <li>
                 <a href="/accounts/password/change">Change Password</a>
               </li>
               <li>
-                <a href="{% url 'profile' %}"><span class="fas fa-user"></span></a>
+                <a href="{% url 'profile' %}"><span class="fas fa-user">Profile</span></a>
               </li>
               <li>
                 <a href="/logout">Logout</a>
