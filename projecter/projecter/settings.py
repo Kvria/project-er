@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
-    'projecter',
+    'project',
     'rest_framework',
     'rest_framework.authtoken',
 ]

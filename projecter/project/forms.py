@@ -18,3 +18,8 @@ class Uploads(forms.ModelForm):
     class Meta:
         model= Post
         exclude = ['profile','post_date']
+
+class Ratings(forms.ModelForm):
+    class Meta:
+        model= Rate
+        exclude = ['profile', 'post']

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post,Profile,User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse,Http404,HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProjectSerializer
@@ -8,7 +8,7 @@ from rest_framework import status
 from django.contrib.auth.decorators import login_required
 from .permissions import IsAdminOrReadOnly
 from rest_framework import status
-from .forms import ProfileUpdateForm, Uploads
+from .forms import ProfileUpdateForm, Uploads, Ratings
 
 
 # Create your views here.
@@ -60,7 +60,7 @@ def post_new(request):
             user_img = form.save(commit=False)
             user_img.profile = current_user
             user_img.save()
-        return redirect('home')
+        return redirect(home)
     else:
         form = Uploads()
     return render(request, "new_post.html", {"form": form})
@@ -69,7 +69,7 @@ def search_by_project_name(request):
 
     if 'post' in request.GET and request.GET["post"]:
         search_term = request.GET.get("post")
-        searched_projects = Post.search_by_user(search_term)
+        searched_projects = Post.search_by_project_name(search_term)
         message = f"{search_term}"
 
         return render(request, '/search.html',{"message":message,"users": searched_projects})
@@ -77,6 +77,21 @@ def search_by_project_name(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+def ratings(request,id):
+    project = Post.get_project(id)
+    current_user = request.user
+    if request.method == 'POST':
+        form = Ratings(request.POST)
+        if form.is_valid():
+            user_img = form.save(commit=False)
+            user_img.profile = current_user.profile
+            user_img.project = project
+            user_img.save()
+        return redirect (home)
+    else:
+        form = Ratings()
+    return render(request, "ratings.html", {"form": form})
 
 class Posts(APIView):
     permission_classes = (IsAdminOrReadOnly,)

@@ -37,6 +37,10 @@ class Post(models.Model):
     def get_user_projects(cls,profile):
         return cls.objects.filter(profile=profile)
 
+    @classmethod
+    def get_project(cls,id):
+        return cls.objects.get(id=id)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -69,7 +73,8 @@ def save_profile( sender, instance, **kwargs):
     instance.profile.save()
 
 class Rate(models.Model):
-    project_image = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='rate')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     design = models.IntegerField()
     usability =models.IntegerField()
     content = models.IntegerField()
